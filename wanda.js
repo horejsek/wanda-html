@@ -29,10 +29,6 @@
       return body.appendChild(this.elm);
     };
 
-    Wanda.prototype.generateStartPositionForTop = function() {
-      return Math.floor(Math.random() * window.innerHeight);
-    };
-
     Wanda.prototype.start = function() {
       var callback, that;
       this.recalculateNewPosition();
@@ -45,9 +41,9 @@
         this.left = -this.width;
         this.top = this.generateStartPositionForTop();
         this.swimQuickAway = false;
-        return setTimeout(callback, 1000 + Math.random() * 10000);
+        return setTimeout(callback, this.generateWhenToStartNextSwim());
       } else {
-        return setTimeout(callback, this.swimQuickAway ? 5 : 20);
+        return setTimeout(callback, this.swimQuickAway ? 15 : 40);
       }
     };
 
@@ -59,20 +55,31 @@
     Wanda.prototype.recalculateNewPositionForTop = function() {
       this.top = this.direction ? this.top + 1 : this.top - 1;
       this.directionCnt += 1;
-      if (this.directionCnt > 20) {
-        this.direction = !this.direction;
-        return this.directionCnt = 0;
-      }
+      if (this.shouldChangeDirection()) return this.changeDirection();
+    };
+
+    Wanda.prototype.shouldChangeDirection = function() {
+      return this.top === 0 || this.top === window.innerHeight || this.directionCnt > 10 + Math.random() * 1000;
+    };
+
+    Wanda.prototype.changeDirection = function() {
+      this.direction = !this.direction;
+      return this.directionCnt = 0;
     };
 
     Wanda.prototype.recalculateNewPositionForLeft = function() {
       if (!this.swimQuickAway || this.left > window.innerWidth / 2) {
-        this.left += 1;
+        this.left += 2;
         return this.elm.className = '';
       } else {
-        this.left -= 1;
+        this.left -= 2;
         return this.elm.className = 'flip';
       }
+    };
+
+    Wanda.prototype.updatePosition = function() {
+      this.elm.style.top = this.top + 'px';
+      return this.elm.style.left = this.left + 'px';
     };
 
     Wanda.prototype.isOutOfScreen = function() {
@@ -80,9 +87,13 @@
       return !((-this.width < (_ref = this.left) && _ref < window.innerWidth + this.width));
     };
 
-    Wanda.prototype.updatePosition = function() {
-      this.elm.style.top = this.top + 'px';
-      return this.elm.style.left = this.left + 'px';
+    Wanda.prototype.generateStartPositionForTop = function() {
+      var top;
+      return top = Math.floor(Math.random() * (window.innerHeight - this.width));
+    };
+
+    Wanda.prototype.generateWhenToStartNextSwim = function() {
+      return 1000 + Math.random() * 10000;
     };
 
     return Wanda;
