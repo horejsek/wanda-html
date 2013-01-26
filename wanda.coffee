@@ -3,6 +3,7 @@ class Wanda
     width: 50
     height: 50
     easterEggKey: 'FREE THE FISH'
+    positionOfKey: 0
 
     constructor: (useAsEasterEgg, saveToStorage) ->
         that = @
@@ -11,6 +12,13 @@ class Wanda
 
     constructor_: (useAsEasterEgg, saveToStorage) ->
         @createWandaElement()
+        @reset()
+        if useAsEasterEgg
+            @easterEgg(saveToStorage)
+        else
+            @start()
+
+    reset: () ->
         @top = @generateStartPositionForTop()
         @left = -@width
         #  There are two direction - up & down. I do not care which one it is
@@ -19,12 +27,6 @@ class Wanda
         #  How many cycles the fish has been swimming in that direction.
         @directionCnt = 0
         @swimQuickAway = false
-
-        if useAsEasterEgg
-            @positionOfKey = 0
-            @easterEgg(saveToStorage)
-        else
-            @start()
 
     createWandaElement: () ->
         that = @
@@ -56,19 +58,15 @@ class Wanda
         document.addEventListener 'keydown', callback
 
     start: () ->
-        @recalculateNewPosition()
-        @updatePosition()
-
         that = @
+        @recalculateNewPosition()
         callback = () -> that.start()
-
         if @isOutOfScreen()
-            @left = -@width
-            @top = @generateStartPositionForTop()
-            @swimQuickAway = false
+            @reset()
             setTimeout callback, @generateWhenToStartNextSwim()
         else
             setTimeout callback, if @swimQuickAway then 15 else 40
+        @updatePosition()
 
     recalculateNewPosition: () ->
         @recalculateNewPositionForTop()

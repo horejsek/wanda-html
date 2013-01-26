@@ -8,6 +8,8 @@ Wanda = (function() {
 
   Wanda.prototype.easterEggKey = 'FREE THE FISH';
 
+  Wanda.prototype.positionOfKey = 0;
+
   function Wanda(useAsEasterEgg, saveToStorage) {
     var that;
     that = this;
@@ -18,17 +20,20 @@ Wanda = (function() {
 
   Wanda.prototype.constructor_ = function(useAsEasterEgg, saveToStorage) {
     this.createWandaElement();
-    this.top = this.generateStartPositionForTop();
-    this.left = -this.width;
-    this.direction = true;
-    this.directionCnt = 0;
-    this.swimQuickAway = false;
+    this.reset();
     if (useAsEasterEgg) {
-      this.positionOfKey = 0;
       return this.easterEgg(saveToStorage);
     } else {
       return this.start();
     }
+  };
+
+  Wanda.prototype.reset = function() {
+    this.top = this.generateStartPositionForTop();
+    this.left = -this.width;
+    this.direction = true;
+    this.directionCnt = 0;
+    return this.swimQuickAway = false;
   };
 
   Wanda.prototype.createWandaElement = function() {
@@ -71,20 +76,18 @@ Wanda = (function() {
 
   Wanda.prototype.start = function() {
     var callback, that;
-    this.recalculateNewPosition();
-    this.updatePosition();
     that = this;
+    this.recalculateNewPosition();
     callback = function() {
       return that.start();
     };
     if (this.isOutOfScreen()) {
-      this.left = -this.width;
-      this.top = this.generateStartPositionForTop();
-      this.swimQuickAway = false;
-      return setTimeout(callback, this.generateWhenToStartNextSwim());
+      this.reset();
+      setTimeout(callback, this.generateWhenToStartNextSwim());
     } else {
-      return setTimeout(callback, this.swimQuickAway ? 15 : 40);
+      setTimeout(callback, this.swimQuickAway ? 15 : 40);
     }
+    return this.updatePosition();
   };
 
   Wanda.prototype.recalculateNewPosition = function() {
