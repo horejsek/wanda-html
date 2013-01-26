@@ -2,8 +2,8 @@
 all: compile
 
 compile:
-	coffee -c *.coffee
+	coffee -cb *.coffee
 
 watch:
-	coffee --watch -c *.coffee
+	coffee --watch -cb *.coffee
 

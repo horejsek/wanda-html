@@ -2,8 +2,14 @@
 class Wanda
     width: 50
     height: 50
+    easterEggKey: 'FREE THE FISH'
 
-    constructor: () ->
+    constructor: (useAsEasterEgg) ->
+        that = @
+        document.addEventListener 'DOMContentLoaded', () ->
+            that.constructor_ useAsEasterEgg
+
+    constructor_: (useAsEasterEgg) ->
         @createWandaElement()
         @top = @generateStartPositionForTop()
         @left = -@width
@@ -13,7 +19,12 @@ class Wanda
         #  How many cycles the fish has been swimming in that direction.
         @directionCnt = 0
         @swimQuickAway = false
-        @start()
+
+        if useAsEasterEgg
+            @positionOfKey = 0
+            @easterEgg()
+        else
+            @start()
 
     createWandaElement: () ->
         that = @
@@ -23,6 +34,21 @@ class Wanda
             that.swimQuickAway = true
         body = document.getElementsByTagName('body')[0]
         body.appendChild @elm
+
+    easterEgg: () ->
+        that = @
+        callback = (e) ->
+            key = String.fromCharCode e.keyCode
+            if key is that.easterEggKey[that.positionOfKey]
+                that.positionOfKey += 1
+                if that.positionOfKey is that.easterEggKey.length
+                    that.start()
+                    this.removeEventListener 'keydown', callback
+            else if key is that.easterEggKey[0]
+                that.positionOfKey = 1
+            else
+                that.positionOfKey = 0
+        document.addEventListener 'keydown', callback
 
     start: () ->
         @recalculateNewPosition()
@@ -76,8 +102,3 @@ class Wanda
 
     generateWhenToStartNextSwim: () ->
         1000 + Math.random() * 10000
-
-
-document.addEventListener 'DOMContentLoaded', () ->
-    new Wanda()
-
