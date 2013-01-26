@@ -4,12 +4,12 @@ class Wanda
     height: 50
     easterEggKey: 'FREE THE FISH'
 
-    constructor: (useAsEasterEgg) ->
+    constructor: (useAsEasterEgg, saveToStorage) ->
         that = @
         document.addEventListener 'DOMContentLoaded', () ->
-            that.constructor_ useAsEasterEgg
+            that.constructor_ useAsEasterEgg, saveToStorage
 
-    constructor_: (useAsEasterEgg) ->
+    constructor_: (useAsEasterEgg, saveToStorage) ->
         @createWandaElement()
         @top = @generateStartPositionForTop()
         @left = -@width
@@ -22,7 +22,7 @@ class Wanda
 
         if useAsEasterEgg
             @positionOfKey = 0
-            @easterEgg()
+            @easterEgg(saveToStorage)
         else
             @start()
 
@@ -35,7 +35,10 @@ class Wanda
         body = document.getElementsByTagName('body')[0]
         body.appendChild @elm
 
-    easterEgg: () ->
+    easterEgg: (saveToStorage) ->
+        if sessionStorage.freeTheFish
+            @start()
+            return
         that = @
         callback = (e) ->
             key = String.fromCharCode e.keyCode
@@ -43,6 +46,8 @@ class Wanda
                 that.positionOfKey += 1
                 if that.positionOfKey is that.easterEggKey.length
                     that.start()
+                    if saveToStorage
+                        sessionStorage.freeTheFish = true
                     this.removeEventListener 'keydown', callback
             else if key is that.easterEggKey[0]
                 that.positionOfKey = 1

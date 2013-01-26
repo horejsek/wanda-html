@@ -1,4 +1,4 @@
-# Wanda - the fish
+# Wanda – the fish
 
 This is implementation of Gnome's easter egg "free the fish" for browser.
 
@@ -12,4 +12,6 @@ You have to just include these lines in your page:
     <script src="wanda.js"></script>
     <script>new Wanda();</script>
 
-If you want to show the fish only after typing of 'free the fish', type this: `new Wanda(true);`.
+If you want to show the fish only after typing of 'free the fish', type this: `new Wanda(true);`. That's all.
+
+And one more thing. If you use 'easter egg' variant, you can pass second parametr (`new Wanda(true, true);`) by which you tell whether to show the fish after reload or not. You know, you have to kill real easter egg and this is similar except you have to close browser window.

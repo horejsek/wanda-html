@@ -8,15 +8,15 @@ Wanda = (function() {
 
   Wanda.prototype.easterEggKey = 'FREE THE FISH';
 
-  function Wanda(useAsEasterEgg) {
+  function Wanda(useAsEasterEgg, saveToStorage) {
     var that;
     that = this;
     document.addEventListener('DOMContentLoaded', function() {
-      return that.constructor_(useAsEasterEgg);
+      return that.constructor_(useAsEasterEgg, saveToStorage);
     });
   }
 
-  Wanda.prototype.constructor_ = function(useAsEasterEgg) {
+  Wanda.prototype.constructor_ = function(useAsEasterEgg, saveToStorage) {
     this.createWandaElement();
     this.top = this.generateStartPositionForTop();
     this.left = -this.width;
@@ -25,7 +25,7 @@ Wanda = (function() {
     this.swimQuickAway = false;
     if (useAsEasterEgg) {
       this.positionOfKey = 0;
-      return this.easterEgg();
+      return this.easterEgg(saveToStorage);
     } else {
       return this.start();
     }
@@ -43,8 +43,12 @@ Wanda = (function() {
     return body.appendChild(this.elm);
   };
 
-  Wanda.prototype.easterEgg = function() {
+  Wanda.prototype.easterEgg = function(saveToStorage) {
     var callback, that;
+    if (sessionStorage.freeTheFish) {
+      this.start();
+      return;
+    }
     that = this;
     callback = function(e) {
       var key;
@@ -53,6 +57,7 @@ Wanda = (function() {
         that.positionOfKey += 1;
         if (that.positionOfKey === that.easterEggKey.length) {
           that.start();
+          if (saveToStorage) sessionStorage.freeTheFish = true;
           return this.removeEventListener('keydown', callback);
         }
       } else if (key === that.easterEggKey[0]) {
