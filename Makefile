@@ -11,3 +11,7 @@ compile:
 
 watch:
 	coffee --watch -cb wanda/*.coffee
+
+install-devlibs:
+	apt-get install coffeescript
+
