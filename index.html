@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Wanda-html : Gnome's “free the fish” easter egg in HTML." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Wanda-html</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/horejsek/wanda-html">View on GitHub</a>
+
+          <h1 id="project_title">Wanda-html</h1>
+          <h2 id="project_tagline">Gnome's “free the fish” easter egg in HTML.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/horejsek/wanda-html/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/horejsek/wanda-html/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Wanda – the fish</h1>
+
+<p>This is implementation of Gnome's easter egg "free the fish" for browser.</p>
+
+<p>Check the <a href="http://htmlpreview.github.com/?https://github.com/horejsek/wanda-html/blob/master/wanda/example.html">preview</a>.</p>
+
+<h2>Usage</h2>
+
+<p>You have to just include these lines in your page:</p>
+
+<pre><code>&lt;link rel="stylesheet" href="https://raw.github.com/horejsek/wanda-html/master/wanda/wanda.css" type="text/css" /&gt;
+&lt;script src="https://raw.github.com/horejsek/wanda-html/master/wanda/wanda.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;new Wanda();&lt;/script&gt;
+</code></pre>
+
+<p>If you want to show the fish only after typing of 'free the fish', type this: <code>new Wanda(true);</code>. That's all.</p>
+
+<p>And one more thing. If you use 'easter egg' variant, you can pass second parametr (<code>new Wanda(true, true);</code>) by which you tell whether to show the fish after reload or not. You know, you have to kill real easter egg and this is similar except you have to close browser window.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Wanda-html maintained by <a href="https://github.com/horejsek">horejsek</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
