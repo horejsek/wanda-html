@@ -112,7 +112,7 @@ class Wanda
             @reset()
             setTimeout callback, @generateWhenToStartNextSwim()
         else
-            setTimeout callback, if @swimQuickAway then 15 else 40
+            setTimeout callback, if @swimQuickAway then 15 else 50
         @updatePosition()
 
     ###*

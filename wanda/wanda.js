@@ -134,7 +134,7 @@ Wanda = (function() {
       this.reset();
       setTimeout(callback, this.generateWhenToStartNextSwim());
     } else {
-      setTimeout(callback, this.swimQuickAway ? 15 : 40);
+      setTimeout(callback, this.swimQuickAway ? 15 : 50);
     }
     return this.updatePosition();
   };
